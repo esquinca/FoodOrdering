@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foodordering.demo.constants.Constants;
+import com.foodordering.demo.dto.UserDetailsDTO;
 import com.foodordering.demo.dto.request.UserReq;
 import com.foodordering.demo.exception.ErrorResponse;
 import com.foodordering.demo.exception.OrderDetailNotFoundException;
@@ -51,6 +52,12 @@ public class UserController {
 
 		return new ResponseEntity<>(orderDetailService.orderdetails(userId, pageNo, pageSize), HttpStatus.OK);
 
+	}
+	
+	@GetMapping("/all_projections/{username}")
+	public ResponseEntity<UserDetailsDTO> getAllUsersWithProjection(@PathVariable String username){
+		UserDetailsDTO userDetailsDto = userService.getAllUsers(username);
+		return new ResponseEntity<UserDetailsDTO>(userDetailsDto, HttpStatus.OK);
 	}
 
 }
