@@ -1,10 +1,12 @@
 package com.foodordering.demo.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.foodordering.demo.dto.UserDetailsDTO;
 import com.foodordering.demo.dto.UserDto;
 import com.foodordering.demo.dto.service.IMappingService;
 import com.foodordering.demo.entity.User;
@@ -32,6 +34,13 @@ public class UserServiceImpl implements IUserService{
 		UserDto userDto=mapping.mappingUSer(user.get());
 		System.out.println(userDto);
 		return userDto;
+	}
+
+	@Override
+	public UserDetailsDTO getAllUsers(String username) {
+		//List<UserDetailsDTO> userList = userRepo.findAllUsers();
+		
+		return userRepo.findUsersWithUsername(username);
 	}
 
 }
