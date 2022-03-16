@@ -54,9 +54,9 @@ public class UserController {
 
 	}
 	
-	@GetMapping("/all_projections")
-	public ResponseEntity<UserDetailsDTO> getAllUsersWithProjection(){
-		UserDetailsDTO userDetailsDto = userService.getAllUsers();
+	@GetMapping("/all_projections/{username}")
+	public ResponseEntity<UserDetailsDTO> getAllUsersWithProjection(@PathVariable String username){
+		UserDetailsDTO userDetailsDto = userService.getAllUsers(username);
 		return new ResponseEntity<UserDetailsDTO>(userDetailsDto, HttpStatus.OK);
 	}
 

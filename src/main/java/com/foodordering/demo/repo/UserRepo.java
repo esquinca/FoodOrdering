@@ -15,7 +15,7 @@ public interface UserRepo extends JpaRepository<User, Integer>{
 	
 	Optional<User> findByUsernameAndPassword(String name, String pass);
 	
-	@Query("select new com.foodordering.demo.dto.UserDetailsDTO(u.username, u.email, u.phoneNo) FROM User u")
-	List<UserDetailsDTO> findAllUsers();
+	@Query("select new com.foodordering.demo.dto.UserDetailsDTO(u.username, u.email, u.phoneNo) FROM User u WHERE u.username = :username")
+	UserDetailsDTO findUsersWithUsername(String username);
 
 }

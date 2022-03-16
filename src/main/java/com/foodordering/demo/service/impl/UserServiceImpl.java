@@ -37,10 +37,10 @@ public class UserServiceImpl implements IUserService{
 	}
 
 	@Override
-	public UserDetailsDTO getAllUsers() {
-		List<UserDetailsDTO> userList = userRepo.findAllUsers();
+	public UserDetailsDTO getAllUsers(String username) {
+		//List<UserDetailsDTO> userList = userRepo.findAllUsers();
 		
-		return (UserDetailsDTO) userList;
+		return userRepo.findUsersWithUsername(username);
 	}
 
 }

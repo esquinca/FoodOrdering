@@ -9,7 +9,7 @@ public interface IUserService {
 	
 	 UserDto findByNameAndPassword(String name, String pass) ;
 
-	UserDetailsDTO getAllUsers();
+	UserDetailsDTO getAllUsers(String username);
 	 
 	 
 	 
