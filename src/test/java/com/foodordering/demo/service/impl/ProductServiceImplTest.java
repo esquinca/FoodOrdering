@@ -2,6 +2,7 @@ package com.foodordering.demo.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -17,7 +18,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.foodordering.demo.dto.ProductDetails;
 import com.foodordering.demo.dto.ProductRequestDTO;
+import com.foodordering.demo.dto.ProductResponseDTO;
 import com.foodordering.demo.entity.Address;
 import com.foodordering.demo.entity.Product;
 import com.foodordering.demo.entity.ProductCategory;
@@ -38,6 +41,7 @@ public class ProductServiceImplTest {
 	
 	ProductRequestDTO productRequestDTO;
 	Store store;
+	Product product;
 	
 	@BeforeEach
 	public void setUp() {
@@ -58,6 +62,17 @@ public class ProductServiceImplTest {
 		product.setProductPrice(100.00);
 		product.setStore(store);
 		
+		//System.out.println("este es el store id del product" + product.getStore().getStoreId());
+		
+		ProductDetails productDetails = new ProductDetails();
+		productDetails.setAvailable(true);
+		productDetails.setProductDescription("Veg Sandwich");
+		productDetails.setProductName("Sandwich");
+		productDetails.setProductPrice(100.00);
+		
+		ProductResponseDTO productResponseDto = new ProductResponseDTO("Fetch of products by id successfull", 200);
+		productResponseDto.setProductList(List.of(productDetails));
+		
 		Address address = new Address();
 		address.setCity("Cancun");
 		address.setPincode("77500");
@@ -71,6 +86,8 @@ public class ProductServiceImplTest {
 		store.setStoreAddress(address);
 		store.setStoreName("Hari Sandwich");
 		store.setStoreDescription("sandwiches, pizza, refreshments...");
+		
+		
 	}
 	
 	@Test
@@ -98,7 +115,7 @@ public class ProductServiceImplTest {
 	
 	@Test
 	@DisplayName("Save product detail: negative")
-	public void saveProductDetailsTest1() {
+	public void saveProductDetailsTestNegative() {
 		//Identify other layer calls example... repos function etc...
 		//Stub other layers
 		
@@ -117,4 +134,30 @@ public class ProductServiceImplTest {
 		assertThrows(StoreNotFoundException.class, () -> productServiceImpl.saveProductDetails(productRequestDTO));
 	}
 	
+	
+	@Test
+	@DisplayName("Get Products by Store Id: positive")
+	public void getProductDetailsByStoreId() {
+		Product product = new Product();
+		product.setProductId(2);
+		product.setProductCategory(ProductCategory.VEG);
+		product.setProductDescription("yyy");
+		product.setProductName("yyy");
+		product.setAvailable(true);
+		product.setProductPrice(100.00);
+		product.setStore(store);
+		
+		//stub storeRepo.findbyid
+		when(storeRepo.findById(1)).thenReturn(Optional.of(store));
+		
+		//stub productRepo.findByStore
+		//List<Product> productList = productRepo.findByStore(filterStore);
+		when(productRepo.findByStore(Optional.of(store))).thenReturn(List.of(product));
+		
+		ProductResponseDTO productResponseDto = productServiceImpl.getProductDetailsByStoreId(1);
+		assertNotNull(productResponseDto);
+		assertEquals("Fetch of products by id successfull", productResponseDto.getMessage());
+		assertEquals(200, productResponseDto.getStatusCode());
+		assertSame(productResponseDto, productResponseDto);
+	}
 }
