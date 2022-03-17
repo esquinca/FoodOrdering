@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,22 +28,42 @@ class StoreServiceImplTest {
 
 	@InjectMocks
 	private StoreServiceImpl storeServiceImpl;
-
+	
+	
+	Store store;
+	StoreResponseDTO storeResponseDto;
+	
+	@BeforeEach
+	public void setUp() {
+		store = new Store();
+		store.setStoreId(1);
+		
+		
+		storeResponseDto = new StoreResponseDTO("Store details fetch success", 200);
+		//List<Store> storeList = new ArrayList<>();
+		//storeList.add(st);
+	}
+	
+	
 	@Test
 	void test() {
 //		when(orderDetailRep.findByUserId(Mockito.anyInt(),Mockito.any())).thenReturn(page);
-		StoreResponseDTO prRe1 = new StoreResponseDTO("Store details fetch success", 200);
 		
-		Store st = new Store();
-		st.setStoreId(1);
+		
+		//Store st = new Store();
+		//st.setStoreId(1);
 
-		List<Store> storeList = new ArrayList<>();
-		storeList.add(st);
+		//List<Store> storeList = new ArrayList<>();
+		//storeList.add(st);
 
-		when(storeRepo.findAll()).thenReturn(storeList);
+		//when(storeRepo.findAll()).thenReturn(storeList);
+		
+		when(storeRepo.findAll()).thenReturn(List.of(store));
+		
+		
 		
 		StoreResponseDTO res=storeServiceImpl.getAllStoreDetails();
-		assertEquals(prRe1.getMessage(), res.getMessage());
+		assertEquals(storeResponseDto.getMessage(), res.getMessage());
 	}
 
 }
