@@ -51,7 +51,6 @@ public class UserController {
 		System.out.println("osvaldo");
 
 		return new ResponseEntity<>(orderDetailService.orderdetails(userId, pageNo, pageSize), HttpStatus.OK);
-
 	}
 	
 	@GetMapping("/all_projections/{username}")
@@ -59,5 +58,6 @@ public class UserController {
 		UserDetailsDTO userDetailsDto = userService.getAllUsers(username);
 		return new ResponseEntity<UserDetailsDTO>(userDetailsDto, HttpStatus.OK);
 	}
+
 
 }
