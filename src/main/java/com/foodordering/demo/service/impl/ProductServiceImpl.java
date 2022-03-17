@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService{
 	ProductRepo productRepo;
 	
 	@Override
-	public void saveProductDetails(ProductRequestDTO productRequestDto) {
+	public Product saveProductDetails(ProductRequestDTO productRequestDto) {
 		Product product = new Product();
 		BeanUtils.copyProperties(productRequestDto, product);
 		
@@ -40,9 +40,9 @@ public class ProductServiceImpl implements ProductService{
 		if(storeOptional.isEmpty()) {
 			throw new StoreNotFoundException("Store not found : " + productRequestDto.getStoreId());
 		}
-			
+		
 		product.setStore(storeOptional.get());
-		productRepo.save(product);
+		return productRepo.save(product);
 	}
 
 	@Override
