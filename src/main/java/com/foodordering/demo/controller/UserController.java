@@ -58,6 +58,9 @@ public class UserController {
 	public ResponseEntity<UserDetailsDTO> getAllUsersWithProjection(@PathVariable String username){
 		UserDetailsDTO userDetailsDto = userService.getAllUsers(username);
 		return new ResponseEntity<UserDetailsDTO>(userDetailsDto, HttpStatus.OK);
-	}
+	
+
+	} 
+
 
 }
