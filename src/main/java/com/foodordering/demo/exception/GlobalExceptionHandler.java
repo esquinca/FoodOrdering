@@ -45,6 +45,7 @@ public class GlobalExceptionHandler {
 
 		ValidationErrorResponse errorResponse = new ValidationErrorResponse("invalid arguments parameters", Constants.INVALID_ARGS);
 		ex.getBindingResult().getFieldErrors().stream().forEach(error->{
+			System.out.println("into foreach");
 			errorResponse.getInvalidArguments().put(error.getField(), error.getDefaultMessage());
 			
 		});

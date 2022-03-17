@@ -8,7 +8,7 @@ public class UserReq {
 	private String name;
 	
 //	@NotNull @NotEmpty
-	@Size(min=1, message = "store id must be greater than or equal to 1")
+	@Size(min=2, message = "password must be greater than 1")
 	private String password;
 	public String getName() {
 		return name;

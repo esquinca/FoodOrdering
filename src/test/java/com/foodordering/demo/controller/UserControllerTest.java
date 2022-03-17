@@ -54,8 +54,8 @@ class UserControllerTest {
 	@Test
 	void users() throws JsonProcessingException, Exception {
 	 	UserReq userRe = new UserReq();
-    	userRe.setName("Osvaldo");
-    	userRe.setPassword("123567mambo");
+    	userRe.setName("osva");
+    	userRe.setPassword("123567salsa");
     	
 		UserDto us=new UserDto();
 		us.setUserId(1);
@@ -78,6 +78,51 @@ class UserControllerTest {
 
 	}
 	
+	
+	@Test
+	void usersValidationFail() throws JsonProcessingException, Exception {
+	 	UserReq userRe = new UserReq();
+    	userRe.setName("");
+    	userRe.setPassword("123567mambo");
+    	
+	
+ 	
+		  // When
+		mockMvc.perform(post("/users/v1/users")
+                .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(userRe)))
+        .andExpect(status().is2xxSuccessful())
+        
+        .andExpect(jsonPath("$.message").value("invalid arguments parameters"))
+        .andExpect(jsonPath("$.invalidArguments.name").value("product name should not be empty"));
+		
+		
+		
+
+	}
+	
+	@Test
+	void usersValidationFail2() throws JsonProcessingException, Exception {
+	 	UserReq userRe = new UserReq();
+    	userRe.setName("osva");
+    	userRe.setPassword("2");
+    	
+
+		
+ 	
+		  // When
+		mockMvc.perform(post("/users/v1/users")
+                .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(userRe)))
+        .andExpect(status().is2xxSuccessful())
+        
+        .andExpect(jsonPath("$.message").value("invalid arguments parameters"))
+        .andExpect(jsonPath("$.invalidArguments.password").value("password must be greater than 1"));
+		
+		
+		
+
+	}
 	
 	
 	@Test
