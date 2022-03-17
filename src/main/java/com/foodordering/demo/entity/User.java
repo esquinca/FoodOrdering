@@ -73,6 +73,12 @@ public class User {
 	public void setAddressList(List<Address> addressList) {
 		this.addressList = addressList;
 	}
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", phoneNo=" + phoneNo + "]";
+	}
 	
 	
 }

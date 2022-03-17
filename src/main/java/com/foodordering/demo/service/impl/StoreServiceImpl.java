@@ -7,7 +7,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.foodordering.demo.dto.ResponseDTO;
 import com.foodordering.demo.dto.StoreDetails;
 import com.foodordering.demo.dto.StoreResponseDTO;
 import com.foodordering.demo.entity.Store;

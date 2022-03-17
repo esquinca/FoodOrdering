@@ -40,8 +40,6 @@ class StoreControllerTest {
 	@Test
 	void getAllStoreDetails() throws JsonProcessingException, Exception {
 
-    	
-
 		StoreResponseDTO prRe= new StoreResponseDTO("success", 200);
 
 		

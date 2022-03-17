@@ -1,4 +1,4 @@
-package com.foodordering.demo.dto.service;
+package com.foodordering.demo.dto.mapping.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +13,7 @@ import com.foodordering.demo.dto.order.detail.ProductDetail;
 import com.foodordering.demo.entity.OrderDetail;
 import com.foodordering.demo.entity.Product;
 import com.foodordering.demo.entity.User;
+import com.foodordering.demo.exception.ProductNotFoundException;
 import com.foodordering.demo.repo.ProductRepo;
 
 
@@ -20,7 +21,7 @@ import com.foodordering.demo.repo.ProductRepo;
 public class MappingService implements IMappingService{
 	
 	@Autowired
-	ProductRepo productRepo;
+	private ProductRepo productRepo;
 
 	@Override
 	public UserDto mappingUSer(User user) {
@@ -37,13 +38,13 @@ public class MappingService implements IMappingService{
 		List<OrderDetailResponse> order =	ordersDetail.stream().map(od->{
 			OrderDetailResponse orderDetDto=new OrderDetailResponse();
 			orderDetDto.setOrderDate(od.getOrderDate());
-			orderDetDto.setStoreId(od.getOrderDetailId().toString());
+			orderDetDto.setStoreId(od.getStore().getStoreId()+"");
 			orderDetDto.setStoreName(od.getStore().getStoreName());
 			orderDetDto.setTotalPrice(od.getTotalPrice());
 			System.out.println("list of products:"+od.getOrderProduct());
 			
 			od.getOrderProduct().forEach(pro->{
-				Product product =productRepo.findById(pro.getProductId()).orElseThrow();
+				Product product =productRepo.findById(pro.getProductId()).orElseThrow(()->new ProductNotFoundException("Product was not found"));
 				ProductDetail prDet= new ProductDetail();
 				prDet.setProductName(product.getProductName());
 				prDet.setQuantity(pro.getProductPrice()+"");
