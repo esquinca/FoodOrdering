@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.foodordering.demo.dto.UserDetailsDTO;
 import com.foodordering.demo.dto.UserDto;
-import com.foodordering.demo.dto.service.IMappingService;
+import com.foodordering.demo.dto.mapping.service.IMappingService;
 import com.foodordering.demo.entity.User;
 import com.foodordering.demo.exception.UserNotFoundException;
 import com.foodordering.demo.repo.UserRepo;
@@ -25,13 +25,13 @@ public class UserServiceImpl implements IUserService{
 	@Override
 	public UserDto findByNameAndPassword(String name, String pass) {
 		
-		Optional<User> user=	userRepo.findByUsernameAndPassword(name, pass);
-//				.orElseThrow(() -> new UserNotFoundException("User not found"));
-		
-        if(!user.isPresent())
-		    throw new UserNotFoundException("User not found");
+		User user=	userRepo.findByUsernameAndPassword(name, pass)
+				.orElseThrow(() -> new UserNotFoundException("User not found"));
+//		System.out.println(user);
+//        if(!user.isPresent())
+//		    throw new UserNotFoundException("User not found");
         
-		UserDto userDto=mapping.mappingUSer(user.get());
+		UserDto userDto=mapping.mappingUSer(user);
 		System.out.println(userDto);
 		return userDto;
 	}

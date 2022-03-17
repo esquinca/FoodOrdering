@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import com.foodordering.demo.dto.OrderRequestDTO;
 import com.foodordering.demo.dto.OrderResponseDTO;
 import com.foodordering.demo.dto.ProductListOrderDetailDTO;
+import com.foodordering.demo.dto.mapping.service.IMappingService;
 import com.foodordering.demo.dto.order.detail.OrderDetailDto;
-import com.foodordering.demo.dto.service.IMappingService;
 import com.foodordering.demo.entity.OrderDetail;
 import com.foodordering.demo.entity.OrderProduct;
 import com.foodordering.demo.entity.Product;
@@ -43,11 +43,12 @@ public class OrderDetailImpl implements OrderDetailService{
 		
 		Pageable paging = PageRequest.of(pageNo, pageSize);
 		Page<OrderDetail> orderPage = orderDetailRep.findByUserId(userId,paging);
+		
+			
 		List<OrderDetail> ordersDet =orderPage.getContent();
 //		List<OrderDetail> ordersDet =	orderDetailRep.findByUserId(userId);
 		if(ordersDet.isEmpty())
-			new OrderDetailNotFoundException("the order history is empty");
-			
+			throw new OrderDetailNotFoundException("the order history is empty");
 		System.out.println("size:"+ordersDet.size());
 		
 		return mapping.mappingOrderDetail(ordersDet);

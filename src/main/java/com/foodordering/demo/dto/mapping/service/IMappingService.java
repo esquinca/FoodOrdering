@@ -1,4 +1,4 @@
-package com.foodordering.demo.dto.service;
+package com.foodordering.demo.dto.mapping.service;
 
 import java.util.List;
 
