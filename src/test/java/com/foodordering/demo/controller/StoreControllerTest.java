@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.foodordering.demo.dto.StoreResponseDTO;
+import com.foodordering.demo.entity.Store;
 import com.foodordering.demo.service.StoreService;
 @WebMvcTest(StoreController.class)
 class StoreControllerTest {
@@ -25,13 +26,17 @@ class StoreControllerTest {
     @MockBean
     private StoreService storeService;
     
- 
-    
+    Store store;
+    StoreResponseDTO storeResponseDto;
     @BeforeEach
     void setUp() {
-
-
-    	
+//    	store = new Store();
+//		store.setStoreId(1);
+//		store.setStoreName("something");
+//		store.setStoreDescription("something else");
+//		store.setRating(5);
+    	storeResponseDto = new StoreResponseDTO("success", 200);
+  
     }
 
 
@@ -40,10 +45,10 @@ class StoreControllerTest {
 	@Test
 	void getAllStoreDetails() throws JsonProcessingException, Exception {
 
-		StoreResponseDTO prRe= new StoreResponseDTO("success", 200);
+		
 
 		
-    	when(storeService.getAllStoreDetails()).thenReturn(prRe);
+    	when(storeService.getAllStoreDetails()).thenReturn(storeResponseDto);
     	
 		  // When
 		mockMvc.perform(get("/stores")

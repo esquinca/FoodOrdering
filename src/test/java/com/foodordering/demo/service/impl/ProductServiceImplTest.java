@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -88,6 +89,8 @@ public class ProductServiceImplTest {
 		store.setStoreDescription("sandwiches, pizza, refreshments...");
 		
 		
+		
+		
 	}
 	
 	@Test
@@ -138,21 +141,21 @@ public class ProductServiceImplTest {
 	@Test
 	@DisplayName("Get Products by Store Id: positive")
 	public void getProductDetailsByStoreId() {
-		Product product = new Product();
-		product.setProductId(2);
-		product.setProductCategory(ProductCategory.VEG);
-		product.setProductDescription("yyy");
-		product.setProductName("yyy");
-		product.setAvailable(true);
-		product.setProductPrice(100.00);
-		product.setStore(store);
+		Product product2 = new Product();
+		product2.setProductId(2);
+		product2.setProductCategory(ProductCategory.VEG);
+		product2.setProductDescription("yyy");
+		product2.setProductName("yyy");
+		product2.setAvailable(true);
+		product2.setProductPrice(100.00);
+		product2.setStore(store);
 		
 		//stub storeRepo.findbyid
 		when(storeRepo.findById(1)).thenReturn(Optional.of(store));
 		
 		//stub productRepo.findByStore
 		//List<Product> productList = productRepo.findByStore(filterStore);
-		when(productRepo.findByStore(Optional.of(store))).thenReturn(List.of(product));
+		when(productRepo.findByStore(Optional.of(store))).thenReturn(List.of(product2));
 		
 		ProductResponseDTO productResponseDto = productServiceImpl.getProductDetailsByStoreId(1);
 		assertNotNull(productResponseDto);

@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -18,6 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.foodordering.demo.dto.OrderRequestDTO;
 import com.foodordering.demo.dto.OrderResponseDTO;
+import com.foodordering.demo.dto.ProductListOrderDetailDTO;
 import com.foodordering.demo.service.OrderDetailService;
 
 
@@ -32,16 +35,24 @@ class OrderDetailControllerTest {
 	    
 	    private ObjectMapper objectMapper;
 	    private OrderRequestDTO orderRequestDto;
+	    private ProductListOrderDetailDTO prodListODDto;
 	    
 	    @BeforeEach
 	    void setUp() {
-
 	    	objectMapper = new ObjectMapper();
+	    	
+	    	
+	    	prodListODDto = new ProductListOrderDetailDTO();
+	    	prodListODDto.setProductId(1);
+	    	prodListODDto.setProductPrice(100.00);
+	    	prodListODDto.setQuantity(1);
+	    	
 	    	orderRequestDto = new OrderRequestDTO();
 	    	orderRequestDto.setUserId(1);
 	    	orderRequestDto.setStoreId(1);
 	    	orderRequestDto.setTotalPrice(4.0);
 	    	orderRequestDto.setOrderNumber("1");
+	    	orderRequestDto.setProductList(List.of(prodListODDto));
 	    	
 	    }
 
